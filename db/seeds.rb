@@ -1,9 +1,9 @@
 puts "🌱 Seeding..." 
 
-Id.delete_all
-Username.delete_all
-Password.delete_all
-Name.delete_all
+# Id.delete_all
+# Username.delete_all
+# Password.delete_all
+# Name.delete_all
 User.delete_all
 
 # creating the users
