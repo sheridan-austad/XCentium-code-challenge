@@ -1,74 +1,89 @@
-import React, { useState } from "react";
-import { useHistory } from "react-router";
+import { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Wrapper, Container, Title, Form, Input, Link, Button} from '../styles/Login';
+import { UserContext } from './data/context';
 
-import { Button, Error, Input, FormField, Label } from "../styles";
+const LoginForm = () => {
+	const { setUser, setMessage } = useContext(UserContext)
+	const [signIn, setSignIn] = useState({
+		username: "",
+		password: "",
+	});
 
-function LoginForm({ onLogin }) {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [errors, setErrors] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const history = useHistory();
+	const history = useNavigate();
 
+	const handleChange = (e) => {
+		setSignIn({
+			...signIn,
+			[e.target.name]: e.target.value
+		});
+	};
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    setIsLoading(true);
-    fetch("/api/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ username, password }),
-    }).then((r) => {
-      setIsLoading(false);
-      if (r.ok) {
-        r.json().then((user) => onLogin(user));
-        history.push("/home");
-      } else {
-        r.json().then((err) => setErrors(err.errors));
-        console.log(errors)
-      }
-    });
-  }
-  // Random Change
+	const handleSignin = (e) => {
+		e.preventDefault();
+		if (
+			[signIn.username, signIn.password].some((val) => val.trim() === '')
+		) {
+			alert(
+				'Please enter a valid username and password or click on forgot password to reset your login information.'
+			);
+		}
+		fetch('/signin', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(signIn),
+		})
+			.then((r) => {
+				if (r.status === 200) {
+					r.json().then((data) => {
+						setUser(data.user);
+						setMessage({message: data.message, status: "success"})
+						history.push('/suggestions'); 
+					});
+				} else {
+					// r.json().then((data) => alert(data.error));
+					r.json().then((data) => setMessage({message: data.message}));
+				}
+			})
+			.catch((error) => alert(error));
 
-  return (
-    <form onSubmit={handleSubmit}>
-      <FormField>
-        <Label htmlFor="username">Username</Label>
-        <Input
-          type="text"
-          id="username"
-          autoComplete="off"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-      </FormField>
-      <FormField>
-        <Label htmlFor="password">Password</Label>
-        <Input
-          type="password"
-          id="password"
-          autoComplete="current-password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-      </FormField>
-      <div id="signInDiv">
-      </div>
-      <FormField>
-        <Button variant="fill" color="primary" type="submit">
-          {isLoading ? "Loading..." : "Login"}
-        </Button>
-      </FormField>
-      <FormField>
-        {errors?.map((err) => (
-          <Error key={err}>{err}</Error>
-        ))}
-      </FormField>
-    </form>
-  );
-}
+		setSignIn({
+			username: "",
+			password: "",
+		})
+	};
+
+	return (
+		<Container>
+			<Wrapper>
+				<Title>WELCOME BACK</Title>
+				<Form onSubmit={handleSignin}>
+					<Input
+						type='text'
+						value={signIn.username}
+						onChange={handleChange}
+						placeholder='Username'
+						name='username'
+					/>
+					<Input
+						type='password'
+						value={signIn.password}
+						onChange={handleChange}
+						placeholder='Password'
+						name='password'
+					/>
+					<Button
+						type='submit'
+					>
+						SIGN IN
+					</Button>
+					<Link href='/signup'>NEED AN ACCOUNT?</Link>
+				</Form>
+			</Wrapper>
+		</Container>
+	);
+};
 
 export default LoginForm;

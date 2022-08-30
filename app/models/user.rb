@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+    has_secure_password
     validates :username, presence: true, uniqueness: true, length: {in: 3..10}
-    validates :email, presence: true, uniqueness: true, format: {with: /\A(?<username>[^@\s]+)@((?<domain_name>[-a-z0-9]+)\.(?<domain>[a-z]{2,}))\z/i}
+    validates :password, length: {in: 5..15}
 end
