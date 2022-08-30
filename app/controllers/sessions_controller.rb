@@ -1,19 +1,25 @@
-class Api::SessionsController < ApplicationController
-  skip_before_action :authorize, only: :create
-
-  def create
-    user = User.find_by(username: params[:username])
-    if user&.authenticate(params[:password])
-      session[:user_id] = user.id
-      render json: user
-    else
-      render json: { errors: ["Invalid username or password"] }, status: :unauthorized
+class SessionsController < ApplicationController
+    post "/signin" do
+        user = User.find_by_username(params[:username])
+        if user&.authenticate(params[:password])
+            session[:user_id] = user.id
+            halt 200, {user: user, message:"User successfully logged in"}.to_json
+        else
+            halt 404, {message: "Invalid Username or Password. Please try again."}.to_json
+        end
     end
-  end
 
-  def destroy
-    session.delete :user_id
-    head :no_content
-  end
+    delete "/signout" do
+        session.delete("user_id")
+        {message: "Successfully logged out."}.to_json
+    end
 
+    get "/me" do
+        @current_user ||= User.find_by_id(session[:user_id])
+            if @current_user
+                halt 200, {user: @current_user}.to_json
+            else
+                halt 400, {message: "No user is logged in."}.to_json
+        end
+    end
 end
