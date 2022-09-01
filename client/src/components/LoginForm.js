@@ -1,10 +1,10 @@
-import { useState, useContext } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Wrapper, Container, Title, Form, Input, Link, Button} from '../styles/Login';
-import { UserContext } from './data/context';
+// import { UserContext } from './data/context';
 
-const LoginForm = () => {
-	const { setUser, setMessage } = useContext(UserContext)
+function LoginForm() {
+	// const { setUser, setMessage } = useContext(UserContext)
 	const [signIn, setSignIn] = useState({
 		username: "",
 		password: "",
@@ -38,13 +38,13 @@ const LoginForm = () => {
 			.then((r) => {
 				if (r.status === 200) {
 					r.json().then((data) => {
-						setUser(data.user);
-						setMessage({message: data.message, status: "success"})
+						// setUser(data.user);
+						// setMessage({message: data.message, status: "success"})
 						history.push('/suggestions'); 
 					});
 				} else {
 					// r.json().then((data) => alert(data.error));
-					r.json().then((data) => setMessage({message: data.message}));
+					// r.json().then((data) => setMessage({message: data.message}));
 				}
 			})
 			.catch((error) => alert(error));

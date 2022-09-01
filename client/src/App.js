@@ -1,12 +1,14 @@
 import "./App.css";
 import LoginForm from "./components/LoginForm";
-import { BrowserRouter as Switch, Router, Route } from "react-router-dom";
-import { useEffect, useContext } from "react";
+import { useEffect, useState } from "react";
 import Home from "./components/Home";
-import { UserContext } from "./components/data/context";
+import NavBar from "./components/NavBar";
+// import { UserContext } from "./components/data/context";
 
 function App() {
-  const { setUser } = useContext(UserContext);
+  const [user, setUser] = useState(null);
+  // const { setUser } = useContext(UserContext);
+  console.log("The user is working");
 
   useEffect(() => {
     fetch("/me")
@@ -15,8 +17,10 @@ function App() {
           r.json().then((data) => {
             setUser(data.user);
           });
+          console.log("the if statement is correct");
         } else {
           r.json().then((error) => console.log(error.error));
+          console.log("Something went wrong");
         }
       })
       .catch((err) => console.log(err));
@@ -24,17 +28,10 @@ function App() {
 
   return (
     <div className="App">
-      <h1> Hello world!</h1>
-      <Router>
-        <Switch>
-          <Route path="/login">
-            <LoginForm />
-          </Route>
-          <Route path="/home">
-            <Home />
-          </Route>
-        </Switch>
-      </Router>
+      {/* <h1> Hello world!</h1> */}
+      <NavBar setUser={setUser} />
+
+      <Home user={user}/>
     </div>
   );
 }
