@@ -17,7 +17,7 @@ function NavBar({ setUser }) {
 		<>
 			<Navbar className='navbar sticky-top'>
 				<Container>
-					<Navbar.Brand href='#home'>LOGO</Navbar.Brand>
+					{/* <Navbar.Brand href='#home'>LOGO</Navbar.Brand> */}
 					<Navbar.Collapse className='justify-content-end'>
 						<Button onClick={handleLogout}>Logout</Button>
 					</Navbar.Collapse>
