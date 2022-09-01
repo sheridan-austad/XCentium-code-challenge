@@ -18,7 +18,7 @@ function App() {
 	return (
 	<>
     <NavBar setUser={setUser} />
-    <Home user={user}/>
+    <Home user={user} /> 
   </>
 	);
 }
