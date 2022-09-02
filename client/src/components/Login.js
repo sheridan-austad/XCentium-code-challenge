@@ -33,7 +33,9 @@ const Login = ({onLogin}) => {
 					onLogin(user)
 				})
 			} else {
-				r.json().then((err) => setErrors(err.errors))
+				r.json().then((err) => {
+					setErrors(err.errors)
+				})
 			}
 		})
 	}
@@ -41,10 +43,10 @@ const Login = ({onLogin}) => {
 	return (
 		<Container>
 			<Wrapper>
-				<Title>PLEASE SIGN IN</Title>
+				<Title> SIGN IN </Title>
 				<Form onSubmit={handleSubmit}>
 				<FormField>
-					<Label htmlFor='username'>Username</Label>
+					<Label htmlFor='username'>Username: </Label>
 					<Input
 						type='text'
 						id='username'
@@ -53,7 +55,7 @@ const Login = ({onLogin}) => {
 					/>
 				</FormField>
 				<FormField>
-					<Label htmlFor='password'>Password</Label>
+					<Label htmlFor='password'>Password: </Label>
 					<Input
 						type='password'
 						id='password'
@@ -67,7 +69,7 @@ const Login = ({onLogin}) => {
 					</Button>
 				</FormField>
 				<FormField>
-					{errors.map((err) => (
+					{errors?.map((err) => (
 						<Error key={err}>{err}</Error>
 					))}
 				</FormField>

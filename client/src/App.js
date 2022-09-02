@@ -4,23 +4,22 @@ import Login from "./components/Login";
 import NavBar from "./components/NavBar";
 
 function App() {
-  const [user, setUser] = useState()
+  const [user, setUser] = useState();
 
   useEffect(() => {
-    fetch('/api/me').then((r) => {
-      if (r.ok) 
-      r.json().then((data) => setUser(data))
-    })
-  }, [setUser])
+    fetch("/api/me").then((r) => {
+      if (r.ok) r.json().then((data) => setUser(data));
+    });
+  }, [setUser]);
 
-  if (!user) return <Login onLogin={setUser} />
+  if (!user) return <Login onLogin={setUser} />;
 
-	return (
-	<>
-    <NavBar setUser={setUser} />
-    <Home user={user} /> 
-  </>
-	);
+  return (
+    <>
+      <NavBar setUser={setUser} />
+      <Home user={user} />
+    </>
+  );
 }
 
 export default App;
