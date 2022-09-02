@@ -2,6 +2,7 @@ import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
 import { Button } from '../styles';
 
+// fetching the logout info from the backend
 function NavBar({ setUser }) {
 	function handleLogout() {
 		fetch('/api/logout', {
@@ -14,10 +15,10 @@ function NavBar({ setUser }) {
 	}
 
 	return (
+		// setting up the logout button
 		<>
 			<Navbar className='navbar sticky-top'>
 				<Container>
-					{/* <Navbar.Brand href='#home'>LOGO</Navbar.Brand> */}
 					<Navbar.Collapse className='justify-content-end'>
 						<Button onClick={handleLogout}>Logout</Button>
 					</Navbar.Collapse>

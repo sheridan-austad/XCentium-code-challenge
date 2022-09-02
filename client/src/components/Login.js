@@ -11,12 +11,15 @@ import {
 } from '../styles';
 import { useState } from 'react';
 
+// setting up the login page so the user can input the proper fields
 const Login = ({onLogin}) => {
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
 	const [errors, setErrors] = useState([]);
 	const [isLoading, setIsLoading] = useState(false);
 
+	// fetching the login info from the backend to allow the user to login and create a new session
+	// raising an error if there is a problem
 	const handleSubmit = (e) => {
 		e.preventDefault()
 		setIsLoading(true)
@@ -41,6 +44,8 @@ const Login = ({onLogin}) => {
 	}
 
 	return (
+		// setting up the sign in page
+		// raising errors if needed
 		<Container>
 			<Wrapper>
 				<Title> SIGN IN </Title>

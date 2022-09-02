@@ -1,3 +1,4 @@
+/* giving the body it's setup */
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
@@ -7,12 +8,14 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* setting up the font for the application */
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
 
-.banner{
+/* setting up the banner on the top of the page */
+.banner {
   height: 50%;
   width: 100%;
 }
